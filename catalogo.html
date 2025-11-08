@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicaDesign | Categorías</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+    body { background: #fdfdfd; color: #222; line-height: 1.6; overflow-x: hidden; }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: background 0.3s ease;
+    }
+    header.scrolled { background: rgba(255,255,255,1); }
+    header .logo { font-size: 1.8rem; font-weight: 700; color: #FF6F61; letter-spacing: 1px; cursor: pointer; }
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { color: #FF6F61; }
+
+    /* Título principal */
+    .title {
+      padding: 150px 20px 50px 20px;
+      text-align: center;
+    }
+    .title h1 { font-size: 2.8rem; color: #FF6F61; animation: fadeIn 1.5s ease-out; }
+
+    /* Grid de categorías */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 0 50px 50px 50px;
+    }
+    .category-card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      cursor: pointer;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1.5s ease-out;
+    }
+    .category-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .category-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .category-card h3 {
+      font-size: 1.3rem;
+      padding: 15px 10px 5px 10px;
+      color: #FF6F61;
+    }
+    .category-card button {
+      background-color: #FF6F61;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      margin-bottom: 15px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .category-card button:hover { background-color: #e65b50; transform: scale(1.05); }
+
+    /* Animaciones */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { padding: 15px 30px; }
+      .title h1 { font-size: 2.2rem; }
+      .categories-grid { padding: 0 20px 50px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="logo">NicaDesign</div>
+    <nav>
+      <a href="index.html">Inicio</a>
+    </nav>
+  </header>
+
+  <!-- Título principal -->
+  <section class="title">
+    <h1>ELIGE CATEGORÍA</h1>
+  </section>
+
+  <!-- Grid de categorías -->
+  <section class="categories-grid">
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1581092795360-198c4c32ec5c?auto=format&fit=crop&w=800&q=80" alt="Vectores">
+      <h3>Vectores</h3>
+      <button onclick="window.location.href='vectores.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1564866657313-5c7c9b7d6a0d?auto=format&fit=crop&w=800&q=80" alt="Mockups">
+      <h3>Mockups</h3>
+      <button onclick="window.location.href='mockups.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Plantillas">
+      <h3>Plantillas</h3>
+      <button onclick="window.location.href='plantillas.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=80" alt="Fotografías">
+      <h3>Fotografías</h3>
+      <button onclick="window.location.href='fotografias.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1593642533144-3d62a4b32aee?auto=format&fit=crop&w=800&q=80" alt="Iconos y UI">
+      <h3>Iconos y UI</h3>
+      <button onclick="window.location.href='iconos-ui.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Texturas y fondos">
+      <h3>Texturas y fondos</h3>
+      <button onclick="window.location.href='texturas-fondos.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1603076726704-5b0b7cf7e4e0?auto=format&fit=crop&w=800&q=80" alt="Ilustraciones">
+      <h3>Ilustraciones</h3>
+      <button onclick="window.location.href='ilustraciones.html'">Ver</button>
+    </div>
+    <div class="category-card">
+      <img src="https://images.unsplash.com/photo-1612831455545-0b2b8b2fcb9a?auto=format&fit=crop&w=800&q=80" alt="Animaciones">
+      <h3>Animaciones</h3>
+      <button onclick="window.location.href='animaciones.html'">Ver</button>
+    </div>
+  </section>
+
+  <script>
+    // Header cambio de fondo al hacer scroll
+    window.addEventListener('scroll', function(){
+      const header = document.getElementById('header');
+      if(window.scrollY > 50){
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+
+</body>
+</html>
