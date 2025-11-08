@@ -38,15 +38,14 @@
       transition:transform .25s ease,box-shadow .25s ease;
       position:relative;
       height:320px; /* altura fija equilibrada */
-   .template-card img{
-  width:100%;
-  height:140px; /* altura visible para la imagen */
-  object-fit: cover; /* ocupa todo el contenedor y recorta si es necesario */
-  background:#f0f0f0;
-  display:block;
-}
-.template-card{
-  height:auto; /* permite que la card crezca según la imagen */
+    }
+  .template-card img{
+  width: 100%;
+  height: auto; /* mantiene la proporción original */
+  max-height: 180px; /* opcional, para que no crezca demasiado */
+  object-fit: contain; /* muestra toda la imagen */
+  background: #f0f0f0;
+  display: block;
 }
     .template-card .body{padding:10px 12px 14px;display:flex;flex-direction:column;gap:6px;flex:1;}
     .template-card h3{color:#FF6F61;font-size:1rem;line-height:1.2;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;}
