@@ -1,466 +1,493 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>NicaDesign | Categorías</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-    body { background: #fdfdfd; color: #222; line-height: 1.6; overflow-x: hidden; }
+    /* =========================
+       ESTILOS PRINCIPALES
+       ========================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+    html,body { height: 100%; background:#fdfdfd; color:#222; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    a { color:inherit; text-decoration:none; }
 
-    /* Header */
+    /* HEADER */
     header {
       position: fixed;
-      top: 0; left: 0; width: 100%;
-      background: rgba(255,255,255,0.95);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 50px;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      transition: background 0.3s ease;
+      top:0; left:0; right:0;
+      height:72px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 0 36px;
+      background: rgba(255,255,255,0.96);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      z-index:1100;
+      transition: background .25s ease, box-shadow .25s ease;
     }
-    header.scrolled { background: rgba(255,255,255,1); }
-    header .logo { font-size: 1.8rem; font-weight: 700; color: #FF6F61; letter-spacing: 1px; cursor: pointer; }
-    nav a {
-      margin-left: 30px;
-      text-decoration: none;
-      color: #222;
-      font-weight: 500;
-      transition: color 0.3s ease;
-    }
-    nav a:hover { color: #FF6F61; }
+    header.scrolled { background: #fff; box-shadow: 0 6px 24px rgba(0,0,0,0.06); }
+    .logo { font-weight:700; color:#FF6F61; font-size:1.25rem; letter-spacing:0.6px; cursor:pointer; }
+    nav a { margin-left:22px; font-weight:600; color:#222; opacity:0.95; }
+    nav a:hover { color:#FF6F61; }
 
-    /* Título principal */
+    /* TÍTULO */
     .title {
-      padding: 150px 20px 50px 20px;
-      text-align: center;
+      padding: 120px 22px 30px 22px; /* top to avoid header */
+      text-align:center;
     }
-    .title h1 { font-size: 2.8rem; color: #FF6F61; animation: fadeIn 1.5s ease-out; }
+    .title h1 { color:#FF6F61; font-size:2.6rem; letter-spacing:0.6px; margin-bottom:6px; }
+    .title p { color:#555; margin-top:8px; max-width:820px; margin-left:auto; margin-right:auto; }
 
-    /* Grid de categorías */
+    /* GRID DE CATEGORÍAS */
     .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 0 50px 80px 50px;
+      max-width:1200px;
+      margin: 26px auto 84px;
+      padding: 0 22px;
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap:26px;
     }
     .category-card {
-      background: #fff;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-      cursor: default; /* no clickable until login */
-      text-align: center;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      animation: fadeIn 1.5s ease-out;
-      min-height: 340px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      background:#fff;
+      border-radius:14px;
+      overflow:hidden;
+      min-height:340px;
+      display:flex;
+      flex-direction:column;
+      justify-content:flex-start;
+      align-items:stretch;
+      box-shadow: 0 10px 30px rgba(12,12,12,0.04);
+      transition: transform .28s ease, box-shadow .28s ease;
+      position:relative;
     }
-    .category-card.disabled { opacity: 0.65; filter: grayscale(10%); }
-    .category-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
-    .category-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-    .category-card h3 {
-      font-size: 1.3rem;
-      padding: 15px 10px 5px 10px;
-      color: #FF6F61;
-    }
-    /* Botón "Ver" (desactivado hasta login) */
-    .category-card button {
-      background-color: #FF6F61;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      margin: 15px auto;
-      border-radius: 50px;
-      cursor: not-allowed;
-      transition: background 0.3s ease, transform 0.3s ease;
+    .category-card:hover { transform: translateY(-8px); box-shadow: 0 18px 40px rgba(12,12,12,0.07); }
+    .category-card img { width:100%; height:200px; object-fit:cover; display:block; }
+    .category-card .body { padding:14px 16px 20px; display:flex; flex-direction:column; gap:8px; flex:1; }
+    .category-card h3 { color:#FF6F61; font-size:1.15rem; margin-top:2px; }
+    .category-card .desc { color:#555; font-size:0.95rem; line-height:1.4; flex:1; margin-top:6px; }
+
+    /* BOTÓN ver (inicialmente sin acción - controlado por JS) */
+    .ver-btn {
+      display:inline-block;
+      margin: 16px auto 20px;
+      padding:10px 22px;
+      border-radius:999px;
+      border:0;
+      background:#FF6F61;
+      color:#fff;
+      font-weight:700;
+      cursor:not-allowed;             /* hasta login */
+      transition: transform .14s ease, background .14s ease;
       outline: none;
     }
-    .category-card button.enabled {
-      cursor: pointer;
-    }
-    .category-card button.enabled:hover { background-color: #e65b50; transform: scale(1.03); }
+    .ver-btn.enabled { cursor:pointer; }
+    .ver-btn.enabled:hover { background:#e65b50; transform:scale(1.03); }
 
-    /* Modal login overlay (impactante) */
+    /* ESTADO BLOQUEADO (visual) */
+    .category-card.locked { filter: grayscale(6%) contrast(0.98); opacity:0.85; }
+
+    /* FOOTER (espacio) */
+    footer { text-align:center; color:#666; padding:36px 22px 80px; font-size:0.95rem; }
+
+    /* ANIMACIONES BÁSICAS */
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(16px);} to { opacity:1; transform:none; } }
+    .fade-in { animation: fadeInUp .7s ease both; }
+
+    /* =========================
+       MODAL LOGIN (overlay)
+       ========================= */
     .overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-    .modal {
-      width: 92%;
-      max-width: 720px;
-      background: linear-gradient(180deg, #ffffff 0%, #fffaf8 100%);
-      border-radius: 18px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
-      padding: 30px;
-      text-align: left;
-      position: relative;
-      overflow: hidden;
-    }
-    .modal .head {
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-    .modal h2 {
-      color: #FF6F61;
-      font-size: 1.6rem;
-      margin-bottom: 6px;
-    }
-    .modal p { color:#444; margin-bottom: 18px; }
-
-    .modal form { display: flex; flex-direction: column; gap: 12px; }
-    .modal input[type="email"],
-    .modal input[type="password"] {
-      padding: 14px 16px;
-      border-radius: 12px;
-      border: 1px solid #eee;
-      font-size: 1rem;
-      width: 100%;
-    }
-    .modal .actions {
-      display:flex;
-      gap:10px;
-      margin-top: 8px;
-      justify-content: flex-end;
-    }
-    .modal button {
-      padding: 12px 18px;
-      border-radius: 999px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn-primary { background: #FF6F61; color: #fff; }
-    .btn-secondary { background: transparent; color: #FF6F61; border: 2px solid #FFE6E2; }
-
-    .modal .small {
-      font-size: 0.9rem;
-      color: #666;
-      margin-top: 8px;
-    }
-
-    /* Small admin gear button (discreto) */
-    .admin-gear {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #222;
-      color: #fff;
+      position:fixed;
+      inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.56), rgba(0,0,0,0.64));
       display:flex;
       align-items:center;
       justify-content:center;
-      cursor:pointer;
-      z-index: 2500;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+      z-index:2200;
+      padding:18px;
+    }
+    .modal {
+      width:100%;
+      max-width:820px;
+      border-radius:16px;
+      background: linear-gradient(180deg,#fff 0%, #fffaf9 100%);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+      overflow:hidden;
+      display:grid;
+      grid-template-columns: 1fr 420px;
+      gap:0;
     }
 
-    /* Admin modal (hidden until auth) */
-    .admin-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.6);
-      z-index: 2600;
+    /* Columna izquierda: imagen / mensaje grande */
+    .modal .visual {
+      background-image: linear-gradient(160deg, rgba(255,111,97,0.95), rgba(255,159,147,0.9));
+      color:#fff;
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      gap:14px;
     }
-    .admin-panel {
-      width: 92%;
-      max-width: 820px;
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    .visual h2 { font-size:1.6rem; font-weight:800; letter-spacing:0.4px; }
+    .visual p { font-size:0.98rem; opacity:0.95; max-width:360px; line-height:1.45; }
+
+    /* Columna derecha: formulario */
+    .modal .formwrap {
+      padding:28px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:stretch;
     }
-    .admin-panel h3 { color:#FF6F61; margin-bottom: 10px; }
-    .admin-panel textarea { width:100%; min-height: 160px; padding: 12px; border-radius: 8px; border:1px solid #eee; font-family: monospace; }
-    .admin-panel .row { display:flex; gap:10px; margin-top:10px; align-items:center; }
-    .admin-panel input[type="text"] { padding:10px; border-radius:8px; border:1px solid #eee; flex:1; }
+    label { font-size:0.86rem; color:#444; margin-bottom:6px; display:block; }
+    input[type="email"], input[type="password"] {
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid #efefef;
+      font-size:1rem;
+      background:#fff;
+    }
+    .small { color:#666; font-size:0.92rem; margin-top:6px; }
+    .actions { display:flex; gap:10px; justify-content:flex-end; margin-top:8px; }
 
-    /* Animaciones */
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .btn-primary { background:#111827; color:#fff; border:0; padding:12px 16px; border-radius:999px; cursor:pointer; font-weight:700; }
+    .btn-ghost { background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.2); padding:12px 16px; border-radius:999px; cursor:pointer; font-weight:700; }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      header { padding: 15px 20px; }
-      .title h1 { font-size: 2.2rem; }
-      .categories-grid { padding: 0 16px 80px 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
-      .modal { padding: 20px; }
+    .login-note { color:#fff; font-size:0.9rem; opacity:0.95; margin-top:8px; max-width:420px; }
+
+    /* Mensaje de error */
+    .error { color:#ffdddd; background:rgba(176,0,32,0.12); border-radius:8px; padding:8px 12px; margin-top:8px; display:none; }
+
+    /* BOTÓN para pago / contacto dentro del modal (estilo) */
+    .pay-btn {
+      background:transparent; color:#fff; border:2px solid rgba(255,255,255,0.2); padding:10px 12px; border-radius:999px; cursor:pointer; font-weight:700;
     }
 
+    /* RESPONSIVE - el modal pasa a una columna en pantallas pequeñas */
+    @media (max-width:880px) {
+      .modal { grid-template-columns: 1fr; }
+      .modal .visual { padding:22px 18px; }
+      .modal .formwrap { padding:18px; }
+      header { padding: 0 18px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header id="header">
-    <div class="logo" onclick="window.location.href='index.html'">NicaDesign</div>
-    <nav>
-      <a href="index.html">Inicio</a>
-    </nav>
+    <div class="logo" onclick="location.href='index.html'">NicaDesign</div>
+    <nav><a href="index.html">Inicio</a></nav>
   </header>
 
-  <!-- Título principal -->
+  <!-- TÍTULO -->
   <section class="title">
     <h1>ELIGE CATEGORÍA</h1>
+    <p>Accede al catálogo premium de recursos (vectores, mockups, plantillas, fotografías, iconos y más). Para entrar necesitas tu correo y la contraseña que te proporcionamos después del pago.</p>
   </section>
 
-  <!-- Grid de categorías -->
+  <!-- GRID DE CATEGORÍAS -->
   <section class="categories-grid" id="categoriesGrid">
-    <!-- Cada tarjeta mantiene el mismo aspecto pero los botones están DESHABILITADOS hasta login -->
-    <div class="category-card disabled" data-page="vectores.html">
-      <img src="https://images.unsplash.com/photo-1581092795360-198c4c32ec5c?auto=format&fit=crop&w=800&q=80" alt="Vectores">
-      <h3>Vectores</h3>
-      <button class="ver-btn" data-target="vectores.html">Ver</button>
-    </div>
+    <!-- Cada tarjeta incluye data-target (página destino). Los botones NO tienen onclick en HTML:
+         la navegación se asigna desde JS solo si el usuario está autenticado. -->
+    <article class="category-card fade-in locked" data-target="vectores.html">
+      <img src="https://images.unsplash.com/photo-1581092795360-198c4c32ec5c?auto=format&fit=crop&w=1200&q=80" alt="Vectores">
+      <div class="body">
+        <h3>Vectores</h3>
+        <div class="desc">Sets vectoriales, iconos, patrones y elementos editables (SVG, AI).</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="mockups.html">
-      <img src="https://images.unsplash.com/photo-1564866657313-5c7c9b7d6a0d?auto=format&fit=crop&w=800&q=80" alt="Mockups">
-      <h3>Mockups</h3>
-      <button class="ver-btn" data-target="mockups.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="mockups.html">
+      <img src="https://images.unsplash.com/photo-1564866657313-5c7c9b7d6a0d?auto=format&fit=crop&w=1200&q=80" alt="Mockups">
+      <div class="body">
+        <h3>Mockups</h3>
+        <div class="desc">Mockups de dispositivos, productos y packaging listos para presentar trabajos.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="plantillas.html">
-      <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Plantillas">
-      <h3>Plantillas</h3>
-      <button class="ver-btn" data-target="plantillas.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="plantillas.html">
+      <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=1200&q=80" alt="Plantillas">
+      <div class="body">
+        <h3>Plantillas</h3>
+        <div class="desc">Plantillas para presentaciones, redes y material imprimible.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="fotografias.html">
-      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=80" alt="Fotografías">
-      <h3>Fotografías</h3>
-      <button class="ver-btn" data-target="fotografias.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="fotografias.html">
+      <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=1200&q=80" alt="Fotografías">
+      <div class="body">
+        <h3>Fotografías</h3>
+        <div class="desc">Imágenes de stock curated para proyectos creativos y comerciales.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="iconos-ui.html">
-      <img src="https://images.unsplash.com/photo-1593642533144-3d62a4b32aee?auto=format&fit=crop&w=800&q=80" alt="Iconos y UI">
-      <h3>Iconos y UI</h3>
-      <button class="ver-btn" data-target="iconos-ui.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="iconos-ui.html">
+      <img src="https://images.unsplash.com/photo-1593642533144-3d62a4b32aee?auto=format&fit=crop&w=1200&q=80" alt="Iconos y UI">
+      <div class="body">
+        <h3>Iconos y UI</h3>
+        <div class="desc">Sets de iconos, UI kits y componentes listos para usar.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="texturas-fondos.html">
-      <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Texturas y fondos">
-      <h3>Texturas y fondos</h3>
-      <button class="ver-btn" data-target="texturas-fondos.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="texturas-fondos.html">
+      <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=1200&q=80" alt="Texturas y fondos">
+      <div class="body">
+        <h3>Texturas y fondos</h3>
+        <div class="desc">Texturas en alta resolución: papel, tela, madera, metal, grunge y más.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="ilustraciones.html">
-      <img src="https://images.unsplash.com/photo-1603076726704-5b0b7cf7e4e0?auto=format&fit=crop&w=800&q=80" alt="Ilustraciones">
-      <h3>Ilustraciones</h3>
-      <button class="ver-btn" data-target="ilustraciones.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="ilustraciones.html">
+      <img src="https://images.unsplash.com/photo-1603076726704-5b0b7cf7e4e0?auto=format&fit=crop&w=1200&q=80" alt="Ilustraciones">
+      <div class="body">
+        <h3>Ilustraciones</h3>
+        <div class="desc">Ilustraciones estilo flat, acuarela digital y personajes vectoriales.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
 
-    <div class="category-card disabled" data-page="animaciones.html">
-      <img src="https://images.unsplash.com/photo-1612831455545-0b2b8b2fcb9a?auto=format&fit=crop&w=800&q=80" alt="Animaciones">
-      <h3>Animaciones</h3>
-      <button class="ver-btn" data-target="animaciones.html">Ver</button>
-    </div>
+    <article class="category-card fade-in locked" data-target="animaciones.html">
+      <img src="https://images.unsplash.com/photo-1612831455545-0b2b8b2fcb9a?auto=format&fit=crop&w=1200&q=80" alt="Animaciones">
+      <div class="body">
+        <h3>Animaciones</h3>
+        <div class="desc">GIFs, Lottie y animaciones listas para redes y presentaciones.</div>
+        <button class="ver-btn" type="button" aria-disabled="true">Ver</button>
+      </div>
+    </article>
   </section>
 
-  <!-- Login Overlay (aparece por defecto al cargar la página) -->
-  <div class="overlay" id="loginOverlay" aria-hidden="false">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-      <div class="head">
-        <div>
-          <h2 id="loginTitle">Acceso a NicaDesign</h2>
-          <p>Introduce tu correo y contraseña para acceder al catálogo. Si compraste acceso, usa las credenciales que te proporcionaron.</p>
-        </div>
+  <!-- OVERLAY / MODAL LOGIN: aparece al cargar la página y bloquea todo -->
+  <div class="overlay" id="loginOverlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal" role="document" aria-describedby="loginDesc">
+      <div class="visual" aria-hidden="false">
+        <h2 id="loginTitle">Acceso exclusivo — NicaDesign</h2>
+        <p id="loginDesc">Para descargar o ver recursos del catálogo necesitas acceso. Si compraste acceso recibiste un correo con tus credenciales. Ingresa tu correo y la contraseña aquí para continuar.</p>
+        <div class="login-note">Al comprar, recibirás el correo y la contraseña para iniciar sesión. Si no has pagado todavía, pulsa "Solicitar pago" para que te indiquemos el proceso.</div>
       </div>
 
-      <form id="loginForm" autocomplete="off">
-        <label for="email">Correo</label>
-        <input id="email" name="email" type="email" placeholder="tu@correo.com" required>
+      <div class="formwrap" aria-hidden="false">
+        <form id="loginForm" autocomplete="off" novalidate>
+          <div>
+            <label for="email">Correo</label>
+            <input id="email" name="email" type="email" placeholder="tu@correo.com" required autocomplete="off" />
+          </div>
 
-        <label for="password">Contraseña</label>
-        <input id="password" name="password" type="password" placeholder="Contraseña" required>
+          <div>
+            <label for="password">Contraseña</label>
+            <input id="password" name="password" type="password" placeholder="Contraseña proporcionada" required autocomplete="new-password" />
+          </div>
 
-        <div class="small">Al iniciar sesión tendrás acceso completo al catálogo descargable.</div>
+          <div class="error" id="loginError">Credenciales inválidas.</div>
 
-        <div class="actions">
-          <button type="button" class="btn-secondary" id="contactPay">Necesito pagar</button>
-          <button type="submit" class="btn-primary">Iniciar sesión</button>
-        </div>
-      </form>
+          <div class="actions" style="margin-top:12px;">
+            <button type="button" class="pay-btn" id="payBtn">Solicitar pago</button>
+            <button type="submit" class="btn-primary" id="loginSubmit">Iniciar sesión</button>
+          </div>
 
-      <!-- Mensaje de error -->
-      <div id="loginError" style="color:#b00020; margin-top:12px; display:none;"></div>
-    </div>
-  </div>
-
-  <!-- Admin gear (oculto discreto) -->
-  <div class="admin-gear" id="adminGear" title="Panel admin (click)">⚙️</div>
-
-  <!-- Admin modal -->
-  <div class="admin-modal" id="adminModal" aria-hidden="true">
-    <div class="admin-panel" role="dialog" aria-modal="true">
-      <h3>Panel administrador - NicaDesign</h3>
-      <p>Lista de correos válidos (uno por línea). Guarda para actualizar. La contraseña común la aplicas abajo.</p>
-
-      <label for="emailsList">Correos válidos:</label>
-      <textarea id="emailsList" placeholder="usuario1@correo.com&#10;usuario2@correo.com"></textarea>
-
-      <div class="row" style="margin-top:12px;">
-        <label style="min-width:140px;">Contraseña común:</label>
-        <input id="commonPass" type="text" placeholder="contraseñaCompartida">
-      </div>
-
-      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:12px;">
-        <button id="adminCancel" class="btn-secondary">Cancelar</button>
-        <button id="adminSave" class="btn-primary">Guardar cambios</button>
-      </div>
-
-      <div style="margin-top:12px; color:#666; font-size:0.9rem;">
-        Nota: Los datos se guardan localmente en tu navegador (localStorage). No recomendamos este método para producción.
+          <div style="margin-top:12px; font-size:0.9rem; color:#444;">
+            <strong>Nota importante:</strong> Las credenciales válidas debes editarlas directamente en el archivo (en la sección indicada más abajo) — o usar el mismo sistema que te configuremos después. No uses contraseñas de cuentas externas (gmail, etc.). Crea siempre una contraseña exclusiva para NicaDesign.
+          </div>
+        </form>
       </div>
     </div>
   </div>
 
+  <footer>© 2025 NicaDesign — Todos los derechos reservados.</footer>
+
+  <!-- ================
+       SCRIPTS (control completo del acceso)
+       ================ -->
   <script>
-    /****************************************************************
-     * SISTEMA DE AUTENTICACIÓN CLIENT-SIDE (sin servidor)
-     * - Lista de correos + contraseña común: se guardan en localStorage
-     * - Admin puede editar la lista desde el panel admin protegido
-     * - Sesión se mantiene en sessionStorage hasta cerrar pestaña
+    /**
+     *  --- INSTRUCCIONES IMPORTANTES ---
      *
-     * ATENCIÓN: Esto es un control en el front-end (estático). No
-     * es invulnerable. Lee las advertencias al final del archivo.
-     ****************************************************************/
+     *  1) Aquí abajo edita LOS VALORES dentro de DEFAULT_ALLOWED y COMMON_PASSWORD
+     *     para definir los correos válidos y la contraseña común que compartirás
+     *     con quienes compren acceso.
+     *
+     *     Por ejemplo:
+     *       const DEFAULT_ALLOWED = ['cliente1@correo.com','cliente2@correo.com'];
+     *       const COMMON_PASSWORD = 'MiClaveDeAcceso2025';
+     *
+     *  2) Este control es completamente client-side (en el navegador). No es
+     *     infalible: usuarios avanzados podrían manipular su navegador. Sin embargo
+     *     hemos reforzado la protección para que, incluso si alguien elimina el
+     *     overlay desde DevTools, los botones "Ver" permanecen inoperativos hasta
+     *     que se detecte una sesión activa (sessionStorage).
+     *
+     *  3) Si más adelante quieres un método más seguro, integra un backend / auth.
+     *
+     *  4) NO uses contraseñas ajenas (gmail/bancos/etc). Pide contraseñas creadas
+     *     exclusivamente para NicaDesign.
+     */
 
-    // ---------- Valores por defecto (si localStorage está vacío) ----------
+    /* -----------------------
+       CONFIGURACIÓN (edítala aquí)
+       ----------------------- */
     const DEFAULT_ALLOWED = [
-      // ejemplo inicial (puedes borrarlos desde el admin)
+      /* <<< EDITA AQUI LOS CORREOS AUTORIZADOS >>> */
       'cliente1@example.com',
       'cliente2@example.com'
     ];
-    const DEFAULT_COMMON_PASSWORD = 'NicaAccess2025'; // cámbiala al desplegar
 
-    // Contraseña para abrir panel admin (defínela segura)
-    const ADMIN_PASS = 'AdminNica2025'; // cámbiala antes de publicar
+    const COMMON_PASSWORD = 'NicaAccess2025'; // <<< EDITA AQUI LA CONTRASEÑA COMÚN QUE DARÁS A TUS CLIENTES >>>
 
-    // Keys en localStorage
-    const LS_KEY_ALLOWED = 'nd_allowed_emails';
-    const LS_KEY_PASS = 'nd_common_pass';
+    /* -----------------------
+       FIN DE CONFIGURACIÓN
+       ----------------------- */
 
-    // Cargar datos desde localStorage o usar defaults
-    function loadAllowed() {
-      const raw = localStorage.getItem(LS_KEY_ALLOWED);
-      if (!raw) {
-        localStorage.setItem(LS_KEY_ALLOWED, JSON.stringify(DEFAULT_ALLOWED));
-        return DEFAULT_ALLOWED.slice();
-      }
-      try {
-        const arr = JSON.parse(raw);
-        if (Array.isArray(arr)) return arr;
-      } catch (e) {}
-      return DEFAULT_ALLOWED.slice();
-    }
-    function loadCommonPass() {
-      const p = localStorage.getItem(LS_KEY_PASS);
-      if (!p) {
-        localStorage.setItem(LS_KEY_PASS, DEFAULT_COMMON_PASSWORD);
-        return DEFAULT_COMMON_PASSWORD;
-      }
-      return p;
-    }
-
-    // Estado inicial
-    let allowedEmails = loadAllowed();
-    let commonPassword = loadCommonPass();
-
-    // Elementos
+    // elementos del DOM
     const overlay = document.getElementById('loginOverlay');
     const loginForm = document.getElementById('loginForm');
     const loginError = document.getElementById('loginError');
     const emailInput = document.getElementById('email');
     const passInput = document.getElementById('password');
-    const contactPayBtn = document.getElementById('contactPay');
+    const payBtn = document.getElementById('payBtn');
 
-    const categoryCards = document.querySelectorAll('.category-card');
-    const verBtns = document.querySelectorAll('.ver-btn');
+    // tarjetitas y botones
+    const categoryCards = Array.from(document.querySelectorAll('.category-card'));
+    const verButtons = Array.from(document.querySelectorAll('.ver-btn'));
 
-    // Admin UI elements
-    const adminGear = document.getElementById('adminGear');
-    const adminModal = document.getElementById('adminModal');
-    const emailsList = document.getElementById('emailsList');
-    const commonPassInput = document.getElementById('commonPass');
-    const adminSave = document.getElementById('adminSave');
-    const adminCancel = document.getElementById('adminCancel');
+    // session key
+    const SESSION_KEY = 'nd_session_active_v1';
 
-    // Helper: bloquear scroll cuando overlay visible
-    function setOverlayVisible(visible) {
-      overlay.style.display = visible ? 'flex' : 'none';
-      document.body.style.overflow = visible ? 'hidden' : '';
-      overlay.setAttribute('aria-hidden', !visible);
-    }
-
-    // Inicial: forzamos que overlay esté visible (no se puede eludir desde DOM)
-    // Nota: aunque alguien remueva el overlay con DevTools, los botones no tendrán href
-    setOverlayVisible(true);
-
-    // Deshabilitar comportamientos de "ver" hasta login correcto
-    function updateButtonsState(loggedIn) {
-      verBtns.forEach(btn => {
-        const card = btn.closest('.category-card');
-        if (loggedIn) {
-          card.classList.remove('disabled');
-          btn.classList.add('enabled');
-          btn.style.cursor = 'pointer';
-          // Ahora el botón lleva a la página real (habilita acción)
-          const target = btn.dataset.target;
-          btn.onclick = () => { window.location.href = target; };
-        } else {
-          card.classList.add('disabled');
-          btn.classList.remove('enabled');
-          btn.style.cursor = 'not-allowed';
-          // remover cualquier onclick para dificultar activarlo por inspector
-          btn.onclick = (e) => {
-            e.preventDefault();
-            // pequeña vibración visual para indicar bloqueo
-            btn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-3px)' }, { transform: 'translateY(0)' }], { duration: 160 });
-          };
-        }
-      });
-    }
-
-    // Verificar sessionStorage (si ya está logueado esta sesión)
+    /**
+     * isLoggedIn - revisa sessionStorage
+     */
     function isLoggedIn() {
-      return sessionStorage.getItem('nd_session_active') === '1';
+      try {
+        return sessionStorage.getItem(SESSION_KEY) === '1';
+      } catch (e) {
+        return false;
+      }
     }
 
-    // Al cargar página, establecer estado de botones según sesión
-    updateButtonsState(isLoggedIn());
-    if (isLoggedIn()) {
-      setOverlayVisible(false);
-    } else {
-      setOverlayVisible(true);
+    /**
+     * setLoggedIn - marca la sesión activa en sessionStorage
+     */
+    function setLoggedIn(email) {
+      try {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        sessionStorage.setItem('nd_user_email', String(email || '').toLowerCase());
+      } catch(e) { /* ignore */ }
     }
 
-    // Manejar envío de login
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    /**
+     * logout - limpia la sesión (si la necesitas)
+     */
+    function logout() {
+      try {
+        sessionStorage.removeItem(SESSION_KEY);
+        sessionStorage.removeItem('nd_user_email');
+      } catch(e){}
+      enforceLockedState();
+      showOverlay(true);
+    }
+
+    /**
+     * showOverlay - muestra/oculta el modal (siempre que no haya sesión)
+     */
+    function showOverlay(show) {
+      if (show) {
+        overlay.style.display = 'flex';
+        document.documentElement.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden';
+      } else {
+        overlay.style.display = 'none';
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
+      }
+    }
+
+    /**
+     * enableCatalogControls - habilita eventos y navegación de botones
+     */
+    function enableCatalogControls() {
+      verButtons.forEach(btn => {
+        btn.classList.add('enabled');
+        btn.setAttribute('aria-disabled', 'false');
+        btn.style.cursor = 'pointer';
+        // Asignamos la acción que redirige a la página indicada en el padre
+        btn.onclick = function (ev) {
+          ev.preventDefault();
+          const card = btn.closest('.category-card');
+          if (!card) return;
+          const target = card.getAttribute('data-target');
+          if (target) {
+            window.location.href = target;
+          }
+        };
+      });
+      categoryCards.forEach(c => c.classList.remove('locked'));
+    }
+
+    /**
+     * enforceLockedState - desactiva botones y evita navegación
+     * - esto es ejecutado repetidamente para "reforzar" el bloqueo
+     */
+    function enforceLockedState() {
+      verButtons.forEach(btn => {
+        btn.classList.remove('enabled');
+        btn.setAttribute('aria-disabled', 'true');
+        btn.style.cursor = 'not-allowed';
+        // quitar onclick / href y reemplazar por animación ligera que indique bloqueo
+        btn.onclick = function (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+          // pequeña vibración / retroalimentación visual
+          btn.animate([
+            { transform: 'translateY(0)' },
+            { transform: 'translateY(-4px)' },
+            { transform: 'translateY(0)' }
+          ], { duration: 140 });
+        };
+      });
+      categoryCards.forEach(c => c.classList.add('locked'));
+    }
+
+    /**
+     * validateCredentials - comprueba si el email y la contraseña coinciden
+     * - emails válidos: DEFAULT_ALLOWED (comparación en minúsculas)
+     * - contraseña válida: COMMON_PASSWORD
+     */
+    function validateCredentials(email, password) {
+      if (!email || !password) return false;
+      const e = String(email).trim().toLowerCase();
+      const p = String(password);
+      // búsqueda simple en la lista
+      return DEFAULT_ALLOWED.map(x => String(x).toLowerCase()).includes(e) && p === COMMON_PASSWORD;
+    }
+
+    /* -------------------------
+       Inicio: estado según sesión
+       ------------------------- */
+    (function initialState() {
+      // Si ya existe sesión activa, ocultar overlay y habilitar controles
+      if (isLoggedIn()) {
+        showOverlay(false);
+        enableCatalogControls();
+      } else {
+        // Mostrar overlay y bloquear controles (refuerzo)
+        showOverlay(true);
+        enforceLockedState();
+      }
+    })();
+
+    /* -------------------------
+       Manejo del formulario de login
+       ------------------------- */
+    loginForm.addEventListener('submit', function (ev) {
+      ev.preventDefault();
       loginError.style.display = 'none';
       const email = (emailInput.value || '').trim().toLowerCase();
       const pass = (passInput.value || '').trim();
@@ -471,120 +498,115 @@
         return;
       }
 
-      // comprobar si email está en lista y contraseña coincide
-      const emailAllowed = allowedEmails.includes(email);
-      if (emailAllowed && pass === commonPassword) {
-        // login exitoso
-        sessionStorage.setItem('nd_session_active', '1');
-        sessionStorage.setItem('nd_user_email', email);
-        // desbloquear botones y cerrar overlay
-        updateButtonsState(true);
-        setOverlayVisible(false);
-        // limpiar inputs
+      if (validateCredentials(email, pass)) {
+        // éxito
+        setLoggedIn(email);
+        enableCatalogControls();
+        showOverlay(false);
+        // limpiar campos por seguridad
         emailInput.value = '';
         passInput.value = '';
+        loginError.style.display = 'none';
       } else {
-        loginError.textContent = 'Credenciales inválidas. Si compraste acceso, revisa el correo o contacta soporte.';
+        loginError.textContent = 'Credenciales inválidas. Si ya pagaste, revisa el correo o contacta soporte.';
         loginError.style.display = 'block';
       }
     });
 
-    // Botón "Necesito pagar" -> redirige a contacto o WhatsApp (puedes ajustar)
-    contactPayBtn.addEventListener('click', () => {
-      // Aquí abrimos WhatsApp con tu número y mensaje
+    /* -------------------------
+       Botón "Solicitar pago" abre WhatsApp (o ajústalo)
+       ------------------------- */
+    payBtn.addEventListener('click', function () {
+      // Número y mensaje (ajusta si quieres otro número/mensaje)
       const numero = '+50581294177';
-      const mensaje = 'Quiero comprar acceso a NicaDesign - por favor indicar proceso de pago.';
-      const url = `https://wa.me/${numero.replace(/\D/g,'')}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
+      const texto = 'Solicito información para pagar y obtener acceso a NicaDesign';
+      // lanzar wa.me
+      const phone = numero.replace(/\D/g,'');
+      const wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(texto);
+      window.open(wa, '_blank');
     });
 
-    /***************** PANEL ADMIN ******************/
-    // Abrir admin prompt para pedir contraseña
-    adminGear.addEventListener('click', () => {
-      const attempt = prompt('Contraseña admin:');
-      if (attempt === null) return;
-      if (attempt === ADMIN_PASS) {
-        // cargar datos actuales en el panel
-        const arr = loadAllowed();
-        emailsList.value = arr.join('\n');
-        commonPassInput.value = loadCommonPass();
-        adminModal.style.display = 'flex';
-        adminModal.setAttribute('aria-hidden', 'false');
-      } else {
-        alert('Contraseña admin incorrecta.');
-      }
-    });
-
-    adminCancel.addEventListener('click', () => {
-      adminModal.style.display = 'none';
-      adminModal.setAttribute('aria-hidden', 'true');
-    });
-
-    adminSave.addEventListener('click', () => {
-      // leer textarea y password
-      const raw = emailsList.value.split('\n').map(s => s.trim()).filter(Boolean);
-      const pass = (commonPassInput.value || '').trim();
-      if (!pass) {
-        alert('Define una contraseña común antes de guardar.');
-        return;
-      }
-      // guardar en localStorage
-      localStorage.setItem(LS_KEY_ALLOWED, JSON.stringify(raw));
-      localStorage.setItem(LS_KEY_PASS, pass);
-      // actualizar variables en memoria
-      allowedEmails = raw;
-      commonPassword = pass;
-      alert('Datos guardados. La nueva lista y contraseña estarán activas inmediatamente.');
-      adminModal.style.display = 'none';
-      adminModal.setAttribute('aria-hidden', 'true');
-    });
-
-    /***************** INICIALIZACIÓN ADICIONAL ******************/
-    // Si no hay datos en localStorage, inicializamos
-    if (!localStorage.getItem(LS_KEY_ALLOWED)) {
-      localStorage.setItem(LS_KEY_ALLOWED, JSON.stringify(DEFAULT_ALLOWED));
-    }
-    if (!localStorage.getItem(LS_KEY_PASS)) {
-      localStorage.setItem(LS_KEY_PASS, DEFAULT_COMMON_PASSWORD);
-    }
-
-    // Evitar que botones "Ver" hagan algo por defecto (ya inicializados arriba)
-    // también interceptamos clicks en todo el documento para reforzar el bloqueo
-    document.addEventListener('click', function(e) {
-      // si no está logueado, interceptar clicks en botones "Ver" y en tarjetas
+    /* -------------------------
+       Defensa adicional: cada 300ms eliminamos atributos peligrosos
+       si no hay sesión. Esto dificulta que alguien active botones con simple DOM editing.
+       ------------------------- */
+    setInterval(function () {
       if (!isLoggedIn()) {
-        let el = e.target;
-        if (el.closest && el.closest('.category-card')) {
-          const card = el.closest('.category-card');
-          // si clic en botón Ver, previene navegación
-          if (el.classList && el.classList.contains('ver-btn')) {
-            e.preventDefault();
-            el.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.98)' }, { transform: 'scale(1)' }], { duration: 120 });
-          }
-          // impedir que se agreguen atributos como href por inspector en tiempo real:
-          // comprobamos cada 300ms y quitamos hrefs de botones si no hay sesión (refuerzo)
-        }
-      }
-    });
-
-    // refuerzo: cada 300ms revisamos y retiramos atributos href de botones mientras no haya sesión
-    setInterval(() => {
-      if (!isLoggedIn()) {
-        verBtns.forEach(btn => {
-          // eliminar atributos peligrosos
+        // quitar hrefs y listeners externos en botones y tarjetas
+        verButtons.forEach(btn => {
           try { btn.removeAttribute('href'); } catch(e){}
-          // reset onclick si alguien lo puso manualmente
-          btn.onclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); btn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-3px)' }, { transform: 'translateY(0)' }], { duration: 160 }); };
+          // reasignar el onclick "de bloqueo"
+          btn.onclick = function (ev) {
+            ev.preventDefault();
+            ev.stopPropagation();
+            btn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-3px)' }, { transform: 'translateY(0)' }], { duration: 120 });
+          };
         });
+        // además, neutralizamos posibles enlaces en las tarjetas
+        categoryCards.forEach(card => {
+          try {
+            card.removeAttribute('href');
+            // quitar listeners que el atacante pueda haber puesto
+            card.onclick = function(ev) { ev.preventDefault(); ev.stopPropagation(); };
+          } catch(e){}
+        });
+        // asegurar overlay visible (si no hay sesión)
+        showOverlay(true);
       }
     }, 300);
 
-    // Por si se abre la página y ya había sesión: actualizar allowed en memoria
-    allowedEmails = loadAllowed();
-    commonPassword = loadCommonPass();
+    /* -------------------------
+       Interceptor global de clicks: si no hay sesión, evitamos navegación en
+       elementos dentro del grid aunque alguien agregue hrefs con inspector.
+       ------------------------- */
+    document.addEventListener('click', function (ev) {
+      if (!isLoggedIn()) {
+        const node = ev.target;
+        // si el click está dentro de una tarjeta, cancelar
+        if (node.closest && node.closest('.category-card')) {
+          // permitir interacción solo sobre el modal botones
+          if (node.closest('#loginOverlay')) return;
+          ev.preventDefault();
+          ev.stopPropagation();
+          // feedback: pequeño "shake" en el botón si es un ver-btn
+          const btn = node.closest('.ver-btn') || node;
+          if (btn && btn.animate) {
+            btn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-5px)' }, { transform: 'translateY(0)' }], { duration: 140 });
+          }
+          return false;
+        }
+      }
+    }, true);
 
+    /* -------------------------
+       Proteger con tecla ESC: si se pulsa ESC y no estás logueado, no cerramos overlay.
+       (lo dejamos inactivo). Si quieres permitir cerrar overlay con ESC para sesiones ya activas,
+       puedes ajustar esta parte.
+       ------------------------- */
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key === 'Escape' || ev.key === 'Esc') {
+        if (!isLoggedIn()) {
+          // prevenir que el overlay sea eliminado por scripts que respondan a ESC
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+      }
+    }, true);
+
+    /* -------------------------
+       Aux: cambiar aspecto de header al hacer scroll
+       ------------------------- */
+    window.addEventListener('scroll', function () {
+      const header = document.getElementById('header');
+      if (!header) return;
+      if (window.scrollY > 30) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
+    /* -------------------------
+       Nota final visible en consola (advertencia técnica)
+       ------------------------- */
+    console.log('NicaDesign: sistema de acceso cargado. Recuerda EDITAR DEFAULT_ALLOWED y COMMON_PASSWORD en el script para definir tus clientes.');
   </script>
-
 </body>
 </html>
-
