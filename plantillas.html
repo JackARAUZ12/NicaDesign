@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicaDesign | Plantillas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Montserrat', sans-serif; }
+    body { background:#fdfdfd; color:#222; overflow-x:hidden; }
+
+    /* HEADER */
+    header {
+      position: fixed; top:0; left:0; right:0;
+      height:72px;
+      display:flex; justify-content:space-between; align-items:center;
+      padding:0 36px; background: rgba(255,255,255,0.96);
+      box-shadow:0 2px 10px rgba(0,0,0,0.04); z-index:1000;
+      transition: background .25s ease, box-shadow .25s ease;
+    }
+    header.scrolled { background:#fff; box-shadow:0 6px 24px rgba(0,0,0,0.06); }
+    .logo { font-weight:700; color:#FF6F61; font-size:1.25rem; letter-spacing:0.6px; cursor:pointer; }
+    nav a { margin-left:22px; font-weight:600; color:#222; }
+    nav a:hover { color:#FF6F61; }
+
+    /* TITULO */
+    .title { padding: 100px 20px 20px; text-align:center; }
+    .title h1 { color:#FF6F61; font-size:2.6rem; margin-bottom:6px; }
+    .title p { color:#555; margin-top:6px; max-width:800px; margin-left:auto; margin-right:auto; }
+
+    /* BUSCADOR */
+    .search-bar {
+      max-width:600px; margin:20px auto; display:flex; justify-content:center; align-items:center; gap:10px;
+    }
+    .search-bar input { flex:1; padding:10px 14px; border-radius:12px; border:1px solid #ccc; font-size:1rem; }
+    .search-bar select { padding:10px 14px; border-radius:12px; border:1px solid #ccc; font-size:1rem; background:#fff; color:#222; }
+
+    /* GRID DE PLANTILLAS */
+    .templates-grid {
+      max-width:1200px; margin:30px auto 60px; padding:0 20px;
+      display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:26px;
+    }
+    .template-card {
+      background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 10px 30px rgba(12,12,12,0.05);
+      display:flex; flex-direction:column; transition: transform .28s ease, box-shadow .28s ease; position:relative;
+    }
+    .template-card:hover { transform:translateY(-6px); box-shadow:0 18px 40px rgba(12,12,12,0.08); }
+    .template-card img { width:100%; height:180px; object-fit:cover; display:block; }
+    .template-card .body { padding:14px 16px 20px; display:flex; flex-direction:column; gap:8px; }
+    .template-card h3 { color:#FF6F61; font-size:1.15rem; }
+    .template-card .desc { color:#555; font-size:0.92rem; line-height:1.35; flex:1; }
+    .template-card button {
+      margin-top:auto; padding:10px 16px; border:none; border-radius:50px; background:#FF6F61; color:#fff;
+      font-weight:700; cursor:pointer; transition: transform .2s ease, background .2s ease;
+    }
+    .template-card button:hover { background:#e65b50; transform:scale(1.05); }
+
+    /* FOOTER */
+    footer { text-align:center; color:#666; padding:36px 20px; font-size:0.95rem; }
+
+    /* RESPONSIVE */
+    @media (max-width:768px) {
+      header { padding:0 20px; }
+      .title h1 { font-size:2.2rem; }
+      .templates-grid { padding:0 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="logo" onclick="location.href='index.html'">NicaDesign</div>
+    <nav><a href="categorias.html">Inicio</a></nav>
+  </header>
+
+  <!-- TITULO -->
+  <section class="title">
+    <h1>PLANTILLAS DISPONIBLES</h1>
+    <p>Explora las plantillas que tenemos disponibles y filtra por tipo usando el buscador. Cada plantilla se puede adquirir mediante un enlace personalizado.</p>
+  </section>
+
+  <!-- BUSCADOR / FILTRO -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Buscar plantilla...">
+    <select id="categoryFilter">
+      <option value="all">Todos</option>
+      <option value="post_instagram">Post de Instagram</option>
+      <option value="portada_facebook">Portada Facebook</option>
+      <option value="flyers_banners">Flyers y banners publicitarios</option>
+      <option value="tarjetas">Tarjetas de presentación digital</option>
+      <option value="curriculum">Curriculum</option>
+      <option value="infografia">Infografía</option>
+      <option value="factura">Factura</option>
+      <option value="contrato">Contrato</option>
+      <option value="miniatura">Miniatura</option>
+      <option value="twich">Twitch</option>
+      <option value="sticker">Sticker</option>
+      <option value="streaming">Streaming</option>
+      <option value="logotipo">Logotipo</option>
+      <option value="calendario">Calendario</option>
+      <option value="wallpaper">Wallpaper</option>
+    </select>
+  </div>
+
+  <!-- GRID DE PLANTILLAS -->
+  <section class="templates-grid" id="templatesGrid">
+    <!-- PLANTILLA 1 (ejemplo inicial) -->
+    <div class="template-card" data-groups="post_instagram,flyers_banners">
+      <img src="https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?auto=format&fit=crop&w=800&q=80" alt="Plantilla ejemplo">
+      <div class="body">
+        <h3>Plantilla Creativa Instagram</h3>
+        <p class="desc">Ideal para publicaciones llamativas en Instagram y redes sociales.</p>
+        <button onclick="adquirirPlantilla('https://tuenlaceaqui.com')">Adquirir</button>
+      </div>
+    </div>
+    <!-- FIN PLANTILLA 1 -->
+  </section>
+
+  <footer>© 2025 NicaDesign — Todos los derechos reservados.</footer>
+
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const templatesGrid = document.getElementById('templatesGrid');
+
+    function filterTemplates() {
+      const searchText = searchInput.value.toLowerCase();
+      const selectedCategory = categoryFilter.value;
+      const cards = templatesGrid.querySelectorAll('.template-card');
+      cards.forEach(card => {
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        const desc = card.querySelector('.desc').innerText.toLowerCase();
+        const groups = card.getAttribute('data-groups').split(',');
+        let matchesSearch = title.includes(searchText) || desc.includes(searchText);
+        let matchesCategory = selectedCategory === 'all' || groups.includes(selectedCategory);
+        if(matchesSearch && matchesCategory){
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    searchInput.addEventListener('input', filterTemplates);
+    categoryFilter.addEventListener('change', filterTemplates);
+
+    // función "adquirir"
+    function adquirirPlantilla(url) {
+      if(!url) return;
+      window.open(url,'_blank'); // abre en nueva pestaña
+    }
+
+    // Para agregar nuevas plantillas: duplica <div class="template-card"> y cambia imagen, título, descripción, grupos y enlace en adquirirPlantilla
+  </script>
+
+</body>
+</html>
