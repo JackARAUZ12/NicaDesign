@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>NicaDesign | Categorías</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -45,21 +45,26 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 30px;
-      padding: 0 50px 50px 50px;
+      padding: 0 50px 80px 50px;
     }
     .category-card {
       background: #fff;
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-      cursor: pointer;
+      cursor: default; /* no clickable until login */
       text-align: center;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       animation: fadeIn 1.5s ease-out;
+      min-height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
+    .category-card.disabled { opacity: 0.65; filter: grayscale(10%); }
     .category-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transform: translateY(-6px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
     .category-card img {
       width: 100%;
@@ -72,34 +77,147 @@
       padding: 15px 10px 5px 10px;
       color: #FF6F61;
     }
+    /* Botón "Ver" (desactivado hasta login) */
     .category-card button {
       background-color: #FF6F61;
       color: #fff;
       border: none;
       padding: 10px 20px;
-      margin-bottom: 15px;
+      margin: 15px auto;
       border-radius: 50px;
-      cursor: pointer;
+      cursor: not-allowed;
       transition: background 0.3s ease, transform 0.3s ease;
+      outline: none;
     }
-    .category-card button:hover { background-color: #e65b50; transform: scale(1.05); }
+    .category-card button.enabled {
+      cursor: pointer;
+    }
+    .category-card button.enabled:hover { background-color: #e65b50; transform: scale(1.03); }
+
+    /* Modal login overlay (impactante) */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    .modal {
+      width: 92%;
+      max-width: 720px;
+      background: linear-gradient(180deg, #ffffff 0%, #fffaf8 100%);
+      border-radius: 18px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      padding: 30px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+    .modal .head {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .modal h2 {
+      color: #FF6F61;
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+    }
+    .modal p { color:#444; margin-bottom: 18px; }
+
+    .modal form { display: flex; flex-direction: column; gap: 12px; }
+    .modal input[type="email"],
+    .modal input[type="password"] {
+      padding: 14px 16px;
+      border-radius: 12px;
+      border: 1px solid #eee;
+      font-size: 1rem;
+      width: 100%;
+    }
+    .modal .actions {
+      display:flex;
+      gap:10px;
+      margin-top: 8px;
+      justify-content: flex-end;
+    }
+    .modal button {
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-primary { background: #FF6F61; color: #fff; }
+    .btn-secondary { background: transparent; color: #FF6F61; border: 2px solid #FFE6E2; }
+
+    .modal .small {
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 8px;
+    }
+
+    /* Small admin gear button (discreto) */
+    .admin-gear {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #222;
+      color: #fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index: 2500;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    /* Admin modal (hidden until auth) */
+    .admin-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.6);
+      z-index: 2600;
+    }
+    .admin-panel {
+      width: 92%;
+      max-width: 820px;
+      background: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    }
+    .admin-panel h3 { color:#FF6F61; margin-bottom: 10px; }
+    .admin-panel textarea { width:100%; min-height: 160px; padding: 12px; border-radius: 8px; border:1px solid #eee; font-family: monospace; }
+    .admin-panel .row { display:flex; gap:10px; margin-top:10px; align-items:center; }
+    .admin-panel input[type="text"] { padding:10px; border-radius:8px; border:1px solid #eee; flex:1; }
 
     /* Animaciones */
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     /* Responsive */
     @media (max-width: 768px) {
-      header { padding: 15px 30px; }
+      header { padding: 15px 20px; }
       .title h1 { font-size: 2.2rem; }
-      .categories-grid { padding: 0 20px 50px 20px; }
+      .categories-grid { padding: 0 16px 80px 16px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+      .modal { padding: 20px; }
     }
+
   </style>
 </head>
 <body>
 
   <!-- Header -->
   <header id="header">
-    <div class="logo">NicaDesign</div>
+    <div class="logo" onclick="window.location.href='index.html'">NicaDesign</div>
     <nav>
       <a href="index.html">Inicio</a>
     </nav>
@@ -111,60 +229,362 @@
   </section>
 
   <!-- Grid de categorías -->
-  <section class="categories-grid">
-    <div class="category-card">
+  <section class="categories-grid" id="categoriesGrid">
+    <!-- Cada tarjeta mantiene el mismo aspecto pero los botones están DESHABILITADOS hasta login -->
+    <div class="category-card disabled" data-page="vectores.html">
       <img src="https://images.unsplash.com/photo-1581092795360-198c4c32ec5c?auto=format&fit=crop&w=800&q=80" alt="Vectores">
       <h3>Vectores</h3>
-      <button onclick="window.location.href='vectores.html'">Ver</button>
+      <button class="ver-btn" data-target="vectores.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="mockups.html">
       <img src="https://images.unsplash.com/photo-1564866657313-5c7c9b7d6a0d?auto=format&fit=crop&w=800&q=80" alt="Mockups">
       <h3>Mockups</h3>
-      <button onclick="window.location.href='mockups.html'">Ver</button>
+      <button class="ver-btn" data-target="mockups.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="plantillas.html">
       <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Plantillas">
       <h3>Plantillas</h3>
-      <button onclick="window.location.href='plantillas.html'">Ver</button>
+      <button class="ver-btn" data-target="plantillas.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="fotografias.html">
       <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=80" alt="Fotografías">
       <h3>Fotografías</h3>
-      <button onclick="window.location.href='fotografias.html'">Ver</button>
+      <button class="ver-btn" data-target="fotografias.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="iconos-ui.html">
       <img src="https://images.unsplash.com/photo-1593642533144-3d62a4b32aee?auto=format&fit=crop&w=800&q=80" alt="Iconos y UI">
       <h3>Iconos y UI</h3>
-      <button onclick="window.location.href='iconos-ui.html'">Ver</button>
+      <button class="ver-btn" data-target="iconos-ui.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="texturas-fondos.html">
       <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Texturas y fondos">
       <h3>Texturas y fondos</h3>
-      <button onclick="window.location.href='texturas-fondos.html'">Ver</button>
+      <button class="ver-btn" data-target="texturas-fondos.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="ilustraciones.html">
       <img src="https://images.unsplash.com/photo-1603076726704-5b0b7cf7e4e0?auto=format&fit=crop&w=800&q=80" alt="Ilustraciones">
       <h3>Ilustraciones</h3>
-      <button onclick="window.location.href='ilustraciones.html'">Ver</button>
+      <button class="ver-btn" data-target="ilustraciones.html">Ver</button>
     </div>
-    <div class="category-card">
+
+    <div class="category-card disabled" data-page="animaciones.html">
       <img src="https://images.unsplash.com/photo-1612831455545-0b2b8b2fcb9a?auto=format&fit=crop&w=800&q=80" alt="Animaciones">
       <h3>Animaciones</h3>
-      <button onclick="window.location.href='animaciones.html'">Ver</button>
+      <button class="ver-btn" data-target="animaciones.html">Ver</button>
     </div>
   </section>
 
+  <!-- Login Overlay (aparece por defecto al cargar la página) -->
+  <div class="overlay" id="loginOverlay" aria-hidden="false">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <div class="head">
+        <div>
+          <h2 id="loginTitle">Acceso a NicaDesign</h2>
+          <p>Introduce tu correo y contraseña para acceder al catálogo. Si compraste acceso, usa las credenciales que te proporcionaron.</p>
+        </div>
+      </div>
+
+      <form id="loginForm" autocomplete="off">
+        <label for="email">Correo</label>
+        <input id="email" name="email" type="email" placeholder="tu@correo.com" required>
+
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" placeholder="Contraseña" required>
+
+        <div class="small">Al iniciar sesión tendrás acceso completo al catálogo descargable.</div>
+
+        <div class="actions">
+          <button type="button" class="btn-secondary" id="contactPay">Necesito pagar</button>
+          <button type="submit" class="btn-primary">Iniciar sesión</button>
+        </div>
+      </form>
+
+      <!-- Mensaje de error -->
+      <div id="loginError" style="color:#b00020; margin-top:12px; display:none;"></div>
+    </div>
+  </div>
+
+  <!-- Admin gear (oculto discreto) -->
+  <div class="admin-gear" id="adminGear" title="Panel admin (click)">⚙️</div>
+
+  <!-- Admin modal -->
+  <div class="admin-modal" id="adminModal" aria-hidden="true">
+    <div class="admin-panel" role="dialog" aria-modal="true">
+      <h3>Panel administrador - NicaDesign</h3>
+      <p>Lista de correos válidos (uno por línea). Guarda para actualizar. La contraseña común la aplicas abajo.</p>
+
+      <label for="emailsList">Correos válidos:</label>
+      <textarea id="emailsList" placeholder="usuario1@correo.com&#10;usuario2@correo.com"></textarea>
+
+      <div class="row" style="margin-top:12px;">
+        <label style="min-width:140px;">Contraseña común:</label>
+        <input id="commonPass" type="text" placeholder="contraseñaCompartida">
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:12px;">
+        <button id="adminCancel" class="btn-secondary">Cancelar</button>
+        <button id="adminSave" class="btn-primary">Guardar cambios</button>
+      </div>
+
+      <div style="margin-top:12px; color:#666; font-size:0.9rem;">
+        Nota: Los datos se guardan localmente en tu navegador (localStorage). No recomendamos este método para producción.
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Header cambio de fondo al hacer scroll
-    window.addEventListener('scroll', function(){
-      const header = document.getElementById('header');
-      if(window.scrollY > 50){
-        header.classList.add('scrolled');
+    /****************************************************************
+     * SISTEMA DE AUTENTICACIÓN CLIENT-SIDE (sin servidor)
+     * - Lista de correos + contraseña común: se guardan en localStorage
+     * - Admin puede editar la lista desde el panel admin protegido
+     * - Sesión se mantiene en sessionStorage hasta cerrar pestaña
+     *
+     * ATENCIÓN: Esto es un control en el front-end (estático). No
+     * es invulnerable. Lee las advertencias al final del archivo.
+     ****************************************************************/
+
+    // ---------- Valores por defecto (si localStorage está vacío) ----------
+    const DEFAULT_ALLOWED = [
+      // ejemplo inicial (puedes borrarlos desde el admin)
+      'cliente1@example.com',
+      'cliente2@example.com'
+    ];
+    const DEFAULT_COMMON_PASSWORD = 'NicaAccess2025'; // cámbiala al desplegar
+
+    // Contraseña para abrir panel admin (defínela segura)
+    const ADMIN_PASS = 'AdminNica2025'; // cámbiala antes de publicar
+
+    // Keys en localStorage
+    const LS_KEY_ALLOWED = 'nd_allowed_emails';
+    const LS_KEY_PASS = 'nd_common_pass';
+
+    // Cargar datos desde localStorage o usar defaults
+    function loadAllowed() {
+      const raw = localStorage.getItem(LS_KEY_ALLOWED);
+      if (!raw) {
+        localStorage.setItem(LS_KEY_ALLOWED, JSON.stringify(DEFAULT_ALLOWED));
+        return DEFAULT_ALLOWED.slice();
+      }
+      try {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr)) return arr;
+      } catch (e) {}
+      return DEFAULT_ALLOWED.slice();
+    }
+    function loadCommonPass() {
+      const p = localStorage.getItem(LS_KEY_PASS);
+      if (!p) {
+        localStorage.setItem(LS_KEY_PASS, DEFAULT_COMMON_PASSWORD);
+        return DEFAULT_COMMON_PASSWORD;
+      }
+      return p;
+    }
+
+    // Estado inicial
+    let allowedEmails = loadAllowed();
+    let commonPassword = loadCommonPass();
+
+    // Elementos
+    const overlay = document.getElementById('loginOverlay');
+    const loginForm = document.getElementById('loginForm');
+    const loginError = document.getElementById('loginError');
+    const emailInput = document.getElementById('email');
+    const passInput = document.getElementById('password');
+    const contactPayBtn = document.getElementById('contactPay');
+
+    const categoryCards = document.querySelectorAll('.category-card');
+    const verBtns = document.querySelectorAll('.ver-btn');
+
+    // Admin UI elements
+    const adminGear = document.getElementById('adminGear');
+    const adminModal = document.getElementById('adminModal');
+    const emailsList = document.getElementById('emailsList');
+    const commonPassInput = document.getElementById('commonPass');
+    const adminSave = document.getElementById('adminSave');
+    const adminCancel = document.getElementById('adminCancel');
+
+    // Helper: bloquear scroll cuando overlay visible
+    function setOverlayVisible(visible) {
+      overlay.style.display = visible ? 'flex' : 'none';
+      document.body.style.overflow = visible ? 'hidden' : '';
+      overlay.setAttribute('aria-hidden', !visible);
+    }
+
+    // Inicial: forzamos que overlay esté visible (no se puede eludir desde DOM)
+    // Nota: aunque alguien remueva el overlay con DevTools, los botones no tendrán href
+    setOverlayVisible(true);
+
+    // Deshabilitar comportamientos de "ver" hasta login correcto
+    function updateButtonsState(loggedIn) {
+      verBtns.forEach(btn => {
+        const card = btn.closest('.category-card');
+        if (loggedIn) {
+          card.classList.remove('disabled');
+          btn.classList.add('enabled');
+          btn.style.cursor = 'pointer';
+          // Ahora el botón lleva a la página real (habilita acción)
+          const target = btn.dataset.target;
+          btn.onclick = () => { window.location.href = target; };
+        } else {
+          card.classList.add('disabled');
+          btn.classList.remove('enabled');
+          btn.style.cursor = 'not-allowed';
+          // remover cualquier onclick para dificultar activarlo por inspector
+          btn.onclick = (e) => {
+            e.preventDefault();
+            // pequeña vibración visual para indicar bloqueo
+            btn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-3px)' }, { transform: 'translateY(0)' }], { duration: 160 });
+          };
+        }
+      });
+    }
+
+    // Verificar sessionStorage (si ya está logueado esta sesión)
+    function isLoggedIn() {
+      return sessionStorage.getItem('nd_session_active') === '1';
+    }
+
+    // Al cargar página, establecer estado de botones según sesión
+    updateButtonsState(isLoggedIn());
+    if (isLoggedIn()) {
+      setOverlayVisible(false);
+    } else {
+      setOverlayVisible(true);
+    }
+
+    // Manejar envío de login
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      loginError.style.display = 'none';
+      const email = (emailInput.value || '').trim().toLowerCase();
+      const pass = (passInput.value || '').trim();
+
+      if (!email || !pass) {
+        loginError.textContent = 'Completa correo y contraseña.';
+        loginError.style.display = 'block';
+        return;
+      }
+
+      // comprobar si email está en lista y contraseña coincide
+      const emailAllowed = allowedEmails.includes(email);
+      if (emailAllowed && pass === commonPassword) {
+        // login exitoso
+        sessionStorage.setItem('nd_session_active', '1');
+        sessionStorage.setItem('nd_user_email', email);
+        // desbloquear botones y cerrar overlay
+        updateButtonsState(true);
+        setOverlayVisible(false);
+        // limpiar inputs
+        emailInput.value = '';
+        passInput.value = '';
       } else {
-        header.classList.remove('scrolled');
+        loginError.textContent = 'Credenciales inválidas. Si compraste acceso, revisa el correo o contacta soporte.';
+        loginError.style.display = 'block';
       }
     });
+
+    // Botón "Necesito pagar" -> redirige a contacto o WhatsApp (puedes ajustar)
+    contactPayBtn.addEventListener('click', () => {
+      // Aquí abrimos WhatsApp con tu número y mensaje
+      const numero = '+50581294177';
+      const mensaje = 'Quiero comprar acceso a NicaDesign - por favor indicar proceso de pago.';
+      const url = `https://wa.me/${numero.replace(/\D/g,'')}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank');
+    });
+
+    /***************** PANEL ADMIN ******************/
+    // Abrir admin prompt para pedir contraseña
+    adminGear.addEventListener('click', () => {
+      const attempt = prompt('Contraseña admin:');
+      if (attempt === null) return;
+      if (attempt === ADMIN_PASS) {
+        // cargar datos actuales en el panel
+        const arr = loadAllowed();
+        emailsList.value = arr.join('\n');
+        commonPassInput.value = loadCommonPass();
+        adminModal.style.display = 'flex';
+        adminModal.setAttribute('aria-hidden', 'false');
+      } else {
+        alert('Contraseña admin incorrecta.');
+      }
+    });
+
+    adminCancel.addEventListener('click', () => {
+      adminModal.style.display = 'none';
+      adminModal.setAttribute('aria-hidden', 'true');
+    });
+
+    adminSave.addEventListener('click', () => {
+      // leer textarea y password
+      const raw = emailsList.value.split('\n').map(s => s.trim()).filter(Boolean);
+      const pass = (commonPassInput.value || '').trim();
+      if (!pass) {
+        alert('Define una contraseña común antes de guardar.');
+        return;
+      }
+      // guardar en localStorage
+      localStorage.setItem(LS_KEY_ALLOWED, JSON.stringify(raw));
+      localStorage.setItem(LS_KEY_PASS, pass);
+      // actualizar variables en memoria
+      allowedEmails = raw;
+      commonPassword = pass;
+      alert('Datos guardados. La nueva lista y contraseña estarán activas inmediatamente.');
+      adminModal.style.display = 'none';
+      adminModal.setAttribute('aria-hidden', 'true');
+    });
+
+    /***************** INICIALIZACIÓN ADICIONAL ******************/
+    // Si no hay datos en localStorage, inicializamos
+    if (!localStorage.getItem(LS_KEY_ALLOWED)) {
+      localStorage.setItem(LS_KEY_ALLOWED, JSON.stringify(DEFAULT_ALLOWED));
+    }
+    if (!localStorage.getItem(LS_KEY_PASS)) {
+      localStorage.setItem(LS_KEY_PASS, DEFAULT_COMMON_PASSWORD);
+    }
+
+    // Evitar que botones "Ver" hagan algo por defecto (ya inicializados arriba)
+    // también interceptamos clicks en todo el documento para reforzar el bloqueo
+    document.addEventListener('click', function(e) {
+      // si no está logueado, interceptar clicks en botones "Ver" y en tarjetas
+      if (!isLoggedIn()) {
+        let el = e.target;
+        if (el.closest && el.closest('.category-card')) {
+          const card = el.closest('.category-card');
+          // si clic en botón Ver, previene navegación
+          if (el.classList && el.classList.contains('ver-btn')) {
+            e.preventDefault();
+            el.animate([{ transform: 'scale(1)' }, { transform: 'scale(0.98)' }, { transform: 'scale(1)' }], { duration: 120 });
+          }
+          // impedir que se agreguen atributos como href por inspector en tiempo real:
+          // comprobamos cada 300ms y quitamos hrefs de botones si no hay sesión (refuerzo)
+        }
+      }
+    });
+
+    // refuerzo: cada 300ms revisamos y retiramos atributos href de botones mientras no haya sesión
+    setInterval(() => {
+      if (!isLoggedIn()) {
+        verBtns.forEach(btn => {
+          // eliminar atributos peligrosos
+          try { btn.removeAttribute('href'); } catch(e){}
+          // reset onclick si alguien lo puso manualmente
+          btn.onclick = (ev) => { ev.preventDefault(); ev.stopPropagation(); btn.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-3px)' }, { transform: 'translateY(0)' }], { duration: 160 }); };
+        });
+      }
+    }, 300);
+
+    // Por si se abre la página y ya había sesión: actualizar allowed en memoria
+    allowedEmails = loadAllowed();
+    commonPassword = loadCommonPass();
+
   </script>
 
 </body>
 </html>
+
