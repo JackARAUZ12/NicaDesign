@@ -38,15 +38,13 @@
       transition:transform .25s ease,box-shadow .25s ease;
       position:relative;
       height:320px; /* altura fija equilibrada */
-    }
-  .template-card img{
+   .template-card img{
   width:100%;
-  height:auto; /* altura automática según proporción */
-  object-fit: unset; /* o lo eliminas */
+  height:140px; /* altura visible para la imagen */
+  object-fit: cover; /* ocupa todo el contenedor y recorta si es necesario */
+  background:#f0f0f0;
   display:block;
-  border-bottom:1px solid #eee;
 }
-
 .template-card{
   height:auto; /* permite que la card crezca según la imagen */
 }
