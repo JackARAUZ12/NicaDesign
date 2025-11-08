@@ -98,12 +98,7 @@
   <footer>© 2025 NicaDesign — Todos los derechos reservados.</footer>
 
   <script>
-    // --------- VALIDACIÓN DE LOGIN ---------
-    if(!localStorage.getItem('userLoggedIn')){
-      window.location.href = 'catalogo.html'; // si no inició sesión, redirige
-    }
-
-    // --------- FILTRO Y BUSCADOR ---------
+    // FILTRO Y BUSCADOR
     const searchInput = document.getElementById('searchInput');
     const categoryFilter = document.getElementById('categoryFilter');
     const templatesGrid = document.getElementById('templatesGrid');
@@ -125,7 +120,7 @@
     searchInput.addEventListener('input',filterTemplates);
     categoryFilter.addEventListener('change',filterTemplates);
 
-    // --------- FUNCION ADQUIRIR ---------
+    // FUNCION ADQUIRIR
     function adquirirPlantilla(url){
       if(!url) return;
       window.open(url,'_blank');
