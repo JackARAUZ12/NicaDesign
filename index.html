@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NicaDesign | Diseños para Creativos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset básico */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+    body { background-color: #fdfdfd; color: #222; line-height: 1.6; overflow-x: hidden; }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      background: rgba(255,255,255,0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: background 0.3s ease;
+    }
+    header.scrolled { background: rgba(255,255,255,1); }
+
+    header .logo { font-size: 1.8rem; font-weight: 700; color: #FF6F61; letter-spacing: 1px; cursor: pointer; }
+
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #222;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    nav a:hover { color: #FF6F61; }
+
+    /* Hero */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+      padding: 0 20px;
+      animation: fadeIn 1.5s ease-out;
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 20px; animation: slideUp 1.5s ease-out; }
+    .hero p { font-size: 1.2rem; margin-bottom: 30px; max-width: 600px; animation: slideUp 2s ease-out; }
+    .hero .btn {
+      background-color: #FF6F61;
+      color: #fff;
+      padding: 15px 35px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.3s ease;
+      animation: fadeIn 2.5s ease-out;
+    }
+    .hero .btn:hover { background-color: #e65b50; transform: scale(1.05); }
+
+    /* Sección de categorías */
+    .categories {
+      padding: 100px 50px 50px 50px;
+      text-align: center;
+      background: #f9f9f9;
+    }
+    .categories h2 { font-size: 2rem; margin-bottom: 50px; color: #222; }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .category-card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .category-card img { width: 100%; display: block; height: 200px; object-fit: cover; }
+    .category-card h3 { padding: 20px; font-size: 1.3rem; color: #FF6F61; }
+
+    /* Sección destacados */
+    .featured {
+      padding: 80px 50px;
+      text-align: center;
+    }
+    .featured h2 { font-size: 2rem; margin-bottom: 50px; }
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    .featured-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+    .featured-card img { width: 100%; display: block; transition: transform 0.5s ease; }
+    .featured-card:hover img { transform: scale(1.1); }
+    .featured-card .info {
+      position: absolute;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      width: 100%;
+      padding: 15px;
+      text-align: left;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    /* Sobre mí */
+    .about {
+      padding: 80px 50px;
+      background: #f9f9f9;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    .about img { width: 300px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+    .about .text { max-width: 600px; }
+    .about .text h2 { font-size: 2rem; margin-bottom: 20px; }
+    .about .text p { font-size: 1rem; color: #555; line-height: 1.8; }
+
+    /* Contacto */
+    .contact {
+      padding: 80px 50px;
+      text-align: center;
+    }
+    .contact h2 { font-size: 2rem; margin-bottom: 30px; }
+    .contact form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .contact input, .contact textarea {
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+    }
+    .contact button {
+      background-color: #FF6F61;
+      color: #fff;
+      padding: 15px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .contact button:hover { background-color: #e65b50; transform: scale(1.05); }
+
+    /* Footer */
+    footer {
+      background: #222;
+      color: #fff;
+      padding: 40px 50px;
+      text-align: center;
+    }
+    footer a { color: #FF6F61; text-decoration: none; margin: 0 10px; }
+
+    /* Animaciones */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header { padding: 15px 30px; }
+      .hero h1 { font-size: 2.2rem; }
+      .hero p { font-size: 1rem; }
+      .about { flex-direction: column; text-align: center; }
+      .about .text { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header id="header">
+    <div class="logo">NicaDesign</div>
+    <nav>
+      <a href="#categories">Categorías</a>
+      <a href="#featured">Destacados</a>
+      <a href="#about">Sobre mí</a>
+      <a href="#contact">Contacto</a>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Diseños Listos para Creativos</h1>
+    <p>Explora, descarga y lleva tus proyectos al siguiente nivel con nuestros diseños digitales pensados para diseñadores profesionales y aficionados.</p>
+    <button class="btn" onclick="scrollToSection('categories')">Ver Catálogo</button>
+  </section>
+
+  <!-- Categorías -->
+  <section class="categories" id="categories">
+    <h2>Categorías de Diseños</h2>
+    <div class="category-grid">
+      <div class="category-card" onclick="window.location.href='vectores.html'">
+        <img src="https://images.unsplash.com/photo-1581092795360-198c4c32ec5c?auto=format&fit=crop&w=800&q=80" alt="Vectores">
+        <h3>Vectores</h3>
+      </div>
+      <div class="category-card" onclick="window.location.href='mockups.html'">
+        <img src="https://images.unsplash.com/photo-1564866657313-5c7c9b7d6a0d?auto=format&fit=crop&w=800&q=80" alt="Mockups">
+        <h3>Mockups</h3>
+      </div>
+      <div class="category-card" onclick="window.location.href='plantillas.html'">
+        <img src="https://images.unsplash.com/photo-1581091012184-97b9bb8b4d3b?auto=format&fit=crop&w=800&q=80" alt="Plantillas">
+        <h3>Plantillas</h3>
+      </div>
+      <div class="category-card" onclick="window.location.href='gratis.html'">
+        <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=80" alt="Gratis">
+        <h3>Recursos Gratis</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- Destacados -->
+  <section class="featured" id="featured">
+    <h2>Diseños Destacados</h2>
+    <div class="featured-grid">
+      <div class="featured-card">
+        <img src="https://images.unsplash.com/photo-1612831455545-0b2b8b2fcb9a?auto=format&fit=crop&w=800&q=80" alt="Diseño 1">
+        <div class="info">Pack de Vectores Minimalistas</div>
+      </div>
+      <div class="featured-card">
+        <img src="https://images.unsplash.com/photo-1603076726704-5b0b7cf7e4e0?auto=format&fit=crop&w=800&q=80" alt="Diseño 2">
+        <div class="info">Mockups de Productos Modernos</div>
+      </div>
+      <div class="featured-card">
+        <img src="https://images.unsplash.com/photo-1593642533144-3d62a4b32aee?auto=format&fit=crop&w=800&q=80" alt="Diseño 3">
+        <div class="info">Plantillas Creativas para Presentaciones</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre mí -->
+  <section class="about" id="about">
+    <img src="https://images.unsplash.com/photo-1502767089025-6572583495b5?auto=format&fit=crop&w=400&q=80" alt="Sobre NicaDesign">
+    <div class="text">
+      <h2>Sobre NicaDesign</h2>
+      <p>Somos un estudio digital dedicado a crear recursos visuales de alta calidad para diseñadores y creativos. Cada diseño está pensado para ahorrar tiempo y elevar tus proyectos al siguiente nivel. Con NicaDesign, cada idea cobra vida con estilo y profesionalismo.</p>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section class="contact" id="contact">
+    <h2>Contacto</h2>
+    <form action="mailto:tuemail@correo.com" method="POST" enctype="text/plain">
+      <input type="text" name="nombre" placeholder="Tu nombre" required>
+      <input type="email" name="email" placeholder="Tu correo" required>
+      <textarea name="mensaje" rows="5" placeholder="Tu mensaje" required></textarea>
+      <button type="submit">Enviar Mensaje</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 NicaDesign | <a href="#">Términos</a> | <a href="#">Política de privacidad</a></p>
+    <p>Síguenos: 
+      <a href="#">Instagram</a> | 
+      <a href="#">Behance</a> | 
+      <a href="#">TikTok</a>
+    </p>
+  </footer>
+
+  <script>
+    // Scroll suave
+    function scrollToSection(id){
+      document.getElementById(id).scrollIntoView({behavior: 'smooth'});
+    }
+
+    // Header cambio de fondo al hacer scroll
+    window.addEventListener('scroll', function(){
+      const header = document.getElementById('header');
+      if(window.scrollY > 50){
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+  </script>
+
+</body>
+</html>
